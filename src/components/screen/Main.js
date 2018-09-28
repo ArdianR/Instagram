@@ -2,64 +2,15 @@ import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
-import firebase from 'react-native-firebase';
 
 import HomeTab from './HomeTab';
 import SearchTab from './SearchTab';
-import AddMediaTab from './AddMediaTab';
+import GalleryTab from './GalleryTab';
+import AddCamTab from './AddCamTab';
 import FollowingTab from './FollowingTab';
 import YouTab from './YouTab';
 import ProfileTab from './ProfileTab';
-
-class A extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>A</Text>
-      </View>
-    )
-  }
-}
-
-class B extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>B</Text>
-      </View>
-    )
-  }
-}
-
-class C extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>C</Text>
-      </View>
-    )
-  }
-}
-
-class D extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>D</Text>
-      </View>
-    )
-  }
-}
-
-class E extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>E</Text>
-      </View>
-    )
-  }
-}
+import CameraTab from './CameraTab';
 
 const HomeStack = createStackNavigator({ HomeTab }, {
   navigationOptions: {
@@ -125,7 +76,29 @@ let SearchStack = createStackNavigator({ SearchTab }, {
   }
 })
 
-let AddStack = createStackNavigator({ C })
+let GalleryStack = createStackNavigator({ GalleryTab })
+
+let CameraStack = createStackNavigator({ CameraTab })
+
+let AddStack = createMaterialTopTabNavigator(
+  {
+    GalleryStack,
+    CameraStack
+  },
+  {
+    initialRouteName: 'CameraStack',
+    swipeEnabled: false,
+    tabBarOptions: {
+      labelStyle: {
+        fontSize: 12,
+        color: 'black',
+      },
+      style: {
+        backgroundColor: 'white',
+      },
+  }
+})
+
 
 let FollowingStack = createStackNavigator({ FollowingTab })
 
@@ -153,9 +126,7 @@ let LikeStack = createMaterialTopTabNavigator(
 let PeopleStack = createStackNavigator({ ProfileTab }, {
   navigationOptions: {
     headerLeft: (
-      <TouchableOpacity>
-        <Icon name='md-camera' size={25}/>
-      </TouchableOpacity>
+      ''
     ),
     headerLeftContainerStyle: {
       paddingLeft: 15,
@@ -216,6 +187,14 @@ YouStack.navigationOptions = {
   tabBarLabel: 'You',
 }
 
+GalleryStack.navigationOptions = {
+  tabBarLabel: 'Gallery',
+}
+
+CameraStack.navigationOptions = {
+  tabBarLabel: 'Camera',
+}
+
 export default createBottomTabNavigator(
   {
     HomeStack,
@@ -225,7 +204,7 @@ export default createBottomTabNavigator(
     PeopleStack
   },
   {
-    initialRouteName: 'PeopleStack',
+    initialRouteName: 'AddStack',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;

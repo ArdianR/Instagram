@@ -40,28 +40,24 @@ export default class LikesTab extends React.Component {
 
     render() {
       return (
-        <ScrollView>
-            <FlatList
-              data={this.state.dataSource}
-              renderItem={({item}) => 
-                  <View style={{ backgroundColor: '#fafafa' }}>
-                    <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', marginBottom: 5 }}>
-                      <Image source={{ uri: item.picture}} style={{ width: 50, height: 50, margin: 15, borderRadius: 50 }}/>
-                      <View style={{ flex: 5, justifyContent: 'center' }}>
-                        <Text style={{ color: 'black', fontSize: 12 }}>{item.name}</Text>
-                        <Text style={{ color: 'black', fontSize: 12 }}>{item.address}</Text>
-                      </View>
-                      <View style={{ flex: 1, justifyContent: 'center', padding: 10, alignItems: 'flex-end' }}>
-                        <TouchableOpacity>
-                          <Image source={{ uri: item.picture}} style={{ width: 50, height: 50, justifyContent: 'center' }}/>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </View>
-              }
-              keyExtractor={(item, index) => index}
-            />
-        </ScrollView>
+        <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => 
+            <View style={{ flexDirection: 'row', backgroundColor: '#fafafa'}}>
+              <Image source={{ uri: item.picture}} style={{ width: 50, height: 50, margin: 15, borderRadius: 50 }}/>
+              <View style={{ flex: 5, justifyContent: 'center' }}>
+                <Text style={{ color: 'black', fontSize: 12 }}>{item.name}</Text>
+                <Text style={{ color: 'black', fontSize: 12 }}>{item.address}</Text>
+              </View>
+              <View style={{ flex: 1, justifyContent: 'center', padding: 10, alignItems: 'flex-end' }}>
+                <TouchableOpacity>
+                  <Image source={{ uri: item.picture}} style={{ width: 50, height: 50, justifyContent: 'center' }}/>
+                </TouchableOpacity>
+              </View>
+            </View>
+          }
+          keyExtractor={(item, index) => index}
+        />
       );
     }
 

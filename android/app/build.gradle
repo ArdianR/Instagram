@@ -150,6 +150,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-share')
+    compile project(':react-native-fetch-blob')
     compile project(':react-native-firebase')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"

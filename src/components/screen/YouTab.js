@@ -40,28 +40,24 @@ export default class LikesTab extends React.Component {
 
   render() {
     return (
-        <ScrollView>
-            <FlatList
-              data={this.state.dataSource}
-              renderItem={({item}) => 
-                  <View style={{ backgroundColor: '#fafafa' }}>
-                    <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', marginBottom: 5 }}>
-                      <Image source={{ uri: item.picture}} style={{ width: 50, height: 50, margin: 15, borderRadius: 50 }}/>
-                      <View style={{ flex: 4, justifyContent: 'center' }}>
-                        <Text style={{ color: 'black', fontSize: 12 }}>{item.name}</Text>
-                        <Text style={{ color: 'black', fontSize: 12 }}>{item.address}</Text>
-                      </View>
-                      <View style={{ flex: 1, justifyContent: 'center', padding: 10 }}>
-                        <TouchableOpacity>
-                          <Text style={{ borderRadius: 3, fontSize: 12, padding: 5, backgroundColor: '#3897f0', textAlign: 'center', color: 'white' }}>invite</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </View>
-              }
-              keyExtractor={(item, index) => index}
-            />
-        </ScrollView>
+      <FlatList
+        data={this.state.dataSource}
+        renderItem={({item}) => 
+          <View style={{ flexDirection: 'row', backgroundColor: '#fafafa' }}>
+            <Image source={{ uri: item.picture}} style={{ width: 50, height: 50, margin: 15, borderRadius: 50 }}/>
+            <View style={{ flex: 4, justifyContent: 'center' }}>
+              <Text style={{ color: 'black', fontSize: 12 }}>{item.name}</Text>
+              <Text style={{ color: 'black', fontSize: 12 }}>{item.address}</Text>
+            </View>
+            <View style={{ flex: 1, justifyContent: 'center', padding: 10 }}>
+              <TouchableOpacity>
+                <Text style={{ borderRadius: 3, fontSize: 12, padding: 5, backgroundColor: '#3897f0', textAlign: 'center', color: 'white' }}>invite</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        }
+        keyExtractor={(item, index) => index}
+      />
     )
   }
 
