@@ -11,7 +11,10 @@ import FollowingTab from './FollowingTab';
 import YouTab from './YouTab';
 
 import GalleryTab from './GalleryTab';
+// import AddCamTab from './AddCamTab';
 import CameraTab from './CameraTab';
+
+import ImageBrowser from './ImageBrowser';
 
 const HomeStack = createStackNavigator({ HomeTab }, {
   navigationOptions: {
@@ -52,38 +55,32 @@ const HomeStack = createStackNavigator({ HomeTab }, {
 
 let SearchStack = createStackNavigator({ SearchTab }, {
   navigationOptions: {
-    header: null,
+
+    headerTitle: (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <TextInput
+          style={{ margin: 5, width: '96%' ,borderRadius: 3, backgroundColor: '#f2f3f4' }}
+          underlineColorAndroid='transparent'
+          placeholder="Search"
+          returnKeyType="search"
+          placeholderStyle={{}}
+        />
+      </View>
+    ),
+    headerTitleContainerStyle: {
+      justifyContent: 'center',
+    },
+    headerTitleStyle: {
+      fontWeight: 'normal',
+      color: 'black'
+    },
+    headerStyle: {
+      backgroundColor: 'white'
+    },
   }
 })
 
-// let SearchStack = createStackNavigator({ SearchTab }, {
-//   navigationOptions: {
-
-//     headerTitle: (
-//       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//         <TextInput
-//           style={{ margin: 5, width: '96%' ,borderRadius: 3, backgroundColor: '#f2f3f4' }}
-//           underlineColorAndroid='transparent'
-//           placeholder="Search"
-//           returnKeyType="search"
-//           placeholderStyle={{}}
-//         />
-//       </View>
-//     ),
-//     headerTitleContainerStyle: {
-//       justifyContent: 'center',
-//     },
-//     headerTitleStyle: {
-//       fontWeight: 'normal',
-//       color: 'black'
-//     },
-//     headerStyle: {
-//       backgroundColor: 'white'
-//     },
-//   }
-// })
-
-let GalleryStack = createStackNavigator({ GalleryTab })
+let GalleryStack = createStackNavigator({ GalleryTab, ImageBrowser })
 
 let CameraStack = createStackNavigator({ CameraTab })
 
@@ -204,14 +201,14 @@ CameraStack.navigationOptions = {
 
 export default createBottomTabNavigator(
   {
-    // HomeStack,
+    HomeStack,
     SearchStack,
-    // AddStack,
-    // LikeStack,
-    // PeopleStack
+    AddStack,
+    LikeStack,
+    PeopleStack
   },
   {
-    initialRouteName: 'SearchStack',
+    initialRouteName: 'AddStack',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;

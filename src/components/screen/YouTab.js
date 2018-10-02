@@ -56,7 +56,7 @@ export default class LikesTab extends React.Component {
             </View>
           </View>
         }
-        keyExtractor={(item, index) => index}
+        keyExtractor={item => item.name}
       />
     )
   }

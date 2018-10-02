@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, Button, TouchableOpacity, ScrollView, FlatList, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Platform, Image, Text, View, Button, TouchableOpacity, ScrollView, FlatList, ActivityIndicator, Alert, Dimensions } from 'react-native';
 import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 
@@ -10,15 +10,34 @@ export default class Main extends React.Component {
     super();
     this.state = {
       currentUser: null,
-      Columns: 3,
-      height: 135,
-      width: 135,
+      Columns: '',
+      orientation: '',
+      height: '',
+      width: '',
+    }
+  }
+
+  getOrientation = () => {
+    if( this.refs.rootView ) {
+        if( Dimensions.get('window').width < Dimensions.get('window').height ) {
+          this.setState({ orientation: 'portrait' });
+          this.setState({ Columns: 3 });
+          this.setState({ height: Dimensions.get('window').width / 3 });
+          this.setState({ width: Dimensions.get('window').width / 3 });
+        } else {
+          this.setState({ orientation: 'landscape' });
+          this.setState({ Columns: 1 });
+          this.setState({ height: Dimensions.get('window').width });
+          this.setState({ width: Dimensions.get('window').width });
+        }
     }
   }
 
   componentDidMount() {
-    const { currentUser } = firebase.auth()
-    this.setState({ currentUser })
+    const { currentUser } = firebase.auth();
+    this.setState({ currentUser });
+    this.getOrientation();
+    Dimensions.addEventListener( 'change', () => { this.getOrientation(); });
   }
 
   componentWillMount() {
@@ -37,20 +56,16 @@ export default class Main extends React.Component {
     .catch(error => this.setState({ errorMessage: error.message }))
   }
 
-  Grid =()=> {
-    this.setState({
-      Columns: 3,
-      height: 135,
-      width: 135,
-    })
+  gridView =()=> {
+    this.setState({ Columns: 3 });
+    this.setState({ height: Dimensions.get('window').width / 3 });
+    this.setState({ width: Dimensions.get('window').width / 3 });
   }
 
-  List =()=> {
-    this.setState({
-      Columns: 1,
-      height: 250,
-      width: '100%',
-    })
+  listView =()=> {
+    this.setState({ Columns: 1 });
+    this.setState({ height: Dimensions.get('window').width });
+    this.setState({ width: Dimensions.get('window').width });
   }
 
 
@@ -61,28 +76,28 @@ export default class Main extends React.Component {
   render() {
     const { currentUser } = this.state
     return (
-      <ScrollView>
+      <ScrollView >
         <View style={{ backgroundColor: '#fafafa' }}>
           <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
-            <Image source={{uri: 'https://www.joomlack.fr/images/stories/images/on-top-of-earth.jpg'}} style={{ width: 100, height: 100, borderRadius: 50 }} />
+            <Image source={{uri: 'https://www.joomlack.fr/images/stories/images/on-top-of-earth.jpg'}} style={{ width: 90, height: 90, borderRadius: 50 }} />
             <View style={{ justifyContent: 'center', padding: 10 }}>
               <Text style={{ textAlign: 'center', fontSize: 14, color: 'black' }}>2213</Text>
               <Text style={{ textAlign: 'center', fontSize: 12, color: 'black' }}>posts</Text>
-              <TouchableOpacity style={{ justifyContent: 'center', backgroundColor: '#3897f0', height: 35, borderRadius: 5 }}>
+              <TouchableOpacity style={{ justifyContent: 'center', backgroundColor: '#3897f0', height: 30, borderRadius: 5 }}>
                 <Text style={{ textAlign: 'center', fontSize: 14, color: '#e3e9f2', margin: 20 }}>Message</Text>
               </TouchableOpacity>
             </View>
             <View style={{ justifyContent: 'center', padding: 10 }}>
               <Text style={{ textAlign: 'center', fontSize: 14, color: 'black' }}>2213</Text>
               <Text style={{ textAlign: 'center', fontSize: 12, color: 'black' }}>posts</Text>
-              <TouchableOpacity style={{ justifyContent: 'center', backgroundColor: '#3897f0', height: 35, borderRadius: 5 }}>
+              <TouchableOpacity style={{ justifyContent: 'center', backgroundColor: '#3897f0', height: 30, borderRadius: 5 }}>
                 <Text style={{ textAlign: 'center', fontSize: 14, color: '#e3e9f2', margin: 15 }}>Me</Text>
               </TouchableOpacity>
             </View>
             <View style={{ justifyContent: 'center', padding: 10 }}>
               <Text style={{ textAlign: 'center', fontSize: 14, color: 'black' }}>2213</Text>
               <Text style={{ textAlign: 'center', fontSize: 12, color: 'black' }}>posts</Text>
-              <TouchableOpacity style={{ justifyContent: 'center', backgroundColor: '#3897f0', height: 35, borderRadius: 5 }}>
+              <TouchableOpacity style={{ justifyContent: 'center', backgroundColor: '#3897f0', height: 30, borderRadius: 5 }}>
                 <Text style={{ textAlign: 'center', fontSize: 14, color: '#e3e9f2', margin: 15 }}>Me</Text>
               </TouchableOpacity>
             </View>
@@ -104,10 +119,10 @@ export default class Main extends React.Component {
               </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingBottom: 15, paddingTop: 15, borderBottomColor: '#bbb', borderBottomWidth: StyleSheet.hairlineWidth }}>
-              <TouchableOpacity onPress={this.Grid}>
+              <TouchableOpacity onPress={this.gridView}>
                 <Icon name='md-grid' size={25}/>
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.List}>
+              <TouchableOpacity onPress={this.listView}>
                 <Icon name='ios-list' size={25}/>
               </TouchableOpacity>
               <TouchableOpacity>
@@ -115,9 +130,11 @@ export default class Main extends React.Component {
               </TouchableOpacity>
           </View>
           <FlatList
+            ref = "rootView"
+            style={{ flex: 1 }}
             data={ this.state.dataSource }
             renderItem={ ({item}) =>
-              <View style={{ flex: 1, flexWrap: 'wrap' }}>
+              <View>
                 <TouchableOpacity onPress={() => { Alert.alert(item.url) }}>
                   <Image style={{ height: this.state.height, width: this.state.width, margin: 1 }} source = {{ uri: item.url }} />
                 </TouchableOpacity>
@@ -125,7 +142,7 @@ export default class Main extends React.Component {
             }
             numColumns = { this.state.Columns }
             key = {( this.state.Columns ) }
-            keyExtractor={ (item, index) => index }
+            keyExtractor={item => item.url}
           />
         </View>
       </ScrollView>

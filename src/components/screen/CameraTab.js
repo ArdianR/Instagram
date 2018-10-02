@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { CameraRoll, Image, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  AppRegistry,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import { RNCamera } from 'react-native-camera';
 
 export default class CameraTab extends Component {
   
@@ -7,66 +15,62 @@ export default class CameraTab extends Component {
     header: null,
   }
 
-  state = { photos: null };
+  takePicture = async function() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.takePictureAsync(options)
+      console.log(data.uri);
+    }
+  }
 
   render() {
-    let { photos } = this.state;
     return (
-      <TouchableOpacity
-        onPress={()=>{
-          this._savePhoto()}}
-      >
-        <Text style={styles.paragraph}>Fetching photos...</Text>
-      </TouchableOpacity>
-    );
-  }
-
-  _renderPhotos(photos) {
-    let images = [];
-    for (let { node: photo } of photos.edges) {
-      images.push(
-        <TouchableOpacity
-          onPress={this._savePhoto}
-        >
-        <Image
-          source={photo.image}
-          resizeMode="contain"
-          style={{ height: 100, width: 100, resizeMode: 'contain' }}
+      <View style={styles.container}>
+        <RNCamera
+            ref={ref => {
+              this.camera = ref;
+            }}
+            style = {styles.preview}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.on}
+            permissionDialogTitle={'Permission to use camera'}
+            permissionDialogMessage={'We need your permission to use your camera phone'}
+            onGoogleVisionBarcodesDetected={({ barcodes }) => {
+              console.log(barcodes)
+            }}
         />
+        <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
+        <TouchableOpacity
+            onPress={this.takePicture.bind(this)}
+            style = {styles.capture}
+        >
+            <Text style={{fontSize: 14}}> SNAP </Text>
         </TouchableOpacity>
-      );
-    }
-    return images;
-  }
-
-  componentDidMount() {
-    // this._getPhotosAsync().catch(error => {
-    //   console.error(error);
-    // });
-  }
-
-  async _getPhotosAsync() {
-    let photos = await CameraRoll.getPhotos({ first: 4 });
-    this.setState({ photos });
-  }
-
-  _savePhoto = () => {
-    console.log("saving")
-    CameraRoll.saveToCameraRoll("https://www.google.ca/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png").then(response =>{
-      console.log("image saved");
-    }).catch(error => {
-      console.log('error: ', error);
-    })                    
+        </View>
+      </View>
+    );
   }
 }
 
 
 const styles = StyleSheet.create({
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#34495e',
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black'
   },
-});
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    margin: 20
+  }
+})
