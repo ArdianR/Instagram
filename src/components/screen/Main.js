@@ -204,14 +204,14 @@ CameraStack.navigationOptions = {
 
 export default createBottomTabNavigator(
   {
-    // HomeStack,
+    HomeStack,
     SearchStack,
-    // AddStack,
-    // LikeStack,
-    // PeopleStack
+    AddStack,
+    LikeStack,
+    PeopleStack
   },
   {
-    initialRouteName: 'SearchStack',
+    initialRouteName: 'HomeStack',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;

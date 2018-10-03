@@ -80,7 +80,7 @@ export default class SearchTab extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, justifyContent: 'center' }}>
           <ActivityIndicator />
         </View>
       );
@@ -101,6 +101,7 @@ export default class SearchTab extends Component {
       <ListView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        enableEmptySections={true}
         dataSource={this.state.dataSourceListView}
         renderRow={(rowData) => 
           <View style={{ width: 100, height: 125, justifyContent:'center', backgroundColor: '#fafafa' }}>
@@ -110,31 +111,25 @@ export default class SearchTab extends Component {
             <Text numberOfLines={1} style={{ color: 'black', fontSize: 12, textAlign: 'center', padding: 5, paddingBottom: 5 }}>{rowData.name}</Text>
           </View>
         }
-        enableEmptySections={true}
-      />
-      <ListView
-        ref = "rootView"
-        style = {{ flex: 1 }}
-        dataSource={this.state.dataSourceListView}
-        renderRow={(rowData) => 
-          <View style={{ flexWrap: 'wrap' }}>
-            <TouchableOpacity onPress={() => { Alert.alert(rowData.guid) }}>
-              <Image style={{ height: Dimensions.get('window').width / 3, width: Dimensions.get('window').width / 3, margin: 1 }} source = {{ uri: rowData.picture }} onPress={()=>alert(rowData.picture)}/>
-            </TouchableOpacity>
-          </View>
-        }
-        enableEmptySections={true}
       />
       <FlatList
         ref = "rootView"
         style = {{ flex: 1 }}
         data={ this.state.dataSourceFlatList }
         renderItem={ ({item}) =>
-          <View style={{ flexWrap: 'wrap' }}>
-            <TouchableOpacity onPress={() => { Alert.alert(item.guid) }}>
-              <Image style={{ height: Dimensions.get('window').width / 3, width: Dimensions.get('window').width / 3, margin: 1 }} source = {{ uri: item.picture }} onPress={()=>alert(item.picture)}/>
-            </TouchableOpacity>
-          </View>
+          <ListView
+            ref = "rootView"
+            style = {{ flex: 1 }}
+            enableEmptySections={true}
+            dataSource={this.state.dataSourceListView}
+            renderRow={(rowData) => 
+              <View style={{ flexWrap: 'wrap' }}>
+                <TouchableOpacity onPress={() => { Alert.alert(rowData.guid) }}>
+                  <Image style={{ height: Dimensions.get('window').width / 3, width: Dimensions.get('window').width / 3, margin: 1 }} source = {{ uri: rowData.picture }} onPress={()=>alert(rowData.picture)}/>
+                </TouchableOpacity>
+              </View>
+            }
+          />
         }
         numColumns = { this.state.Columns }
         key = {( this.state.Columns ) }

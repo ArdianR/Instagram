@@ -108,7 +108,7 @@ export default class HomeTab extends React.Component {
           renderItem={({item}) => 
             <View>
               <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                <Image source={{ uri: item.picture}} style={{ width: 45, height: 45, margin: 10, borderRadius: 50 }}/>
+                <Image source={{ uri: item.picture}} style={{ width: 35, height: 35, margin: 10, borderRadius: 50 }}/>
                 <View style={{ flex: 4, justifyContent: 'center' }}>
                   <Text style={{ color: 'black', fontSize: 12 }}>{item.name}</Text>
                   <Text numberOfLines={1} style={{ color: 'black', fontSize: 12 }}>{item.address}</Text>
