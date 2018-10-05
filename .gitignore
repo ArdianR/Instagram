@@ -63,3 +63,9 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+src/components/screen/native_modules/lib/global.js
+src/components/screen/native_modules/KotlinVideoStreaming/KotlinVideoStream.js
+src/components/screen/VideoStreamingTab.js
+src/components/screen/KotlinVideoStream.js
+src/components/screen/native_modules/ToastNotification/ToastExample.js
+src/components/screen/SearchBar.js

@@ -13,10 +13,16 @@ import YouTab from './YouTab';
 import GalleryTab from './GalleryTab';
 import CameraTab from './CameraTab';
 
+import CameraRoll from './CameraRoll';
+
+import Toast from './Toast';
+
 const HomeStack = createStackNavigator({ HomeTab }, {
   navigationOptions: {
     headerLeft: (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={()=>{Toast.show('Playing',Toast.SHORT)}}
+      >
         <Icon name='md-camera' size={25}/>
       </TouchableOpacity>
     ),
@@ -87,10 +93,13 @@ let GalleryStack = createStackNavigator({ GalleryTab })
 
 let CameraStack = createStackNavigator({ CameraTab })
 
+let CameraRollStack = createStackNavigator({ CameraRoll })
+
 let AddStack = createMaterialTopTabNavigator(
   {
     GalleryStack,
-    CameraStack
+    CameraStack,
+    CameraRollStack
   },
   {
     initialRouteName: 'GalleryStack',

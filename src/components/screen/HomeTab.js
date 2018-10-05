@@ -12,6 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
+import Toast from './Toast';
 
 export default class HomeTab extends React.Component {
 	constructor(props) {
@@ -92,7 +93,7 @@ export default class HomeTab extends React.Component {
               <Image source={{uri: item.picture}} style={{ width: 75, height: 75, justifyContent: 'center', alignSelf: 'center', borderRadius: 50, }} />
               <Text numberOfLines={1} style={{ color: 'black', fontSize: 12, textAlign: 'center', padding: 5, paddingBottom: 15 }}>{item.name}</Text>
               <View style={{ justifyContent: 'center' }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>{Toast.show(item.name,Toast.SHORT)}}>
                     <Text style={{ borderRadius: 2, fontSize: 12, padding: 2, marginRight: 10, marginLeft: 10, backgroundColor: '#3897f0', textAlign: 'center', color: 'white' }}>invite</Text>
                 </TouchableOpacity>
               </View>
