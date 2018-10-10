@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import Toast from './Toast';
+import ToastKotlin from './ToastKotlin';
 
 export default class HomeTab extends React.Component {
 	constructor(props) {
@@ -77,7 +78,7 @@ export default class HomeTab extends React.Component {
         <View style={{ flexDirection: 'row', backgroundColor: '#fafafa' }}>
           <Text style={{ paddingLeft: 5,  margin: 5, textAlign: 'left', fontSize: 12, justifyContent: 'center', color: '#202020' }}>invite Facebook Friends to Instagram</Text>
           <View style={{ flex: 1 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('ModalTab')}>
               <Text style={{ paddingRight: 10, margin: 5, textAlign: 'right', fontSize: 12, color: '#3897f0' }}>See All</Text>
             </TouchableOpacity>
           </View>
@@ -109,7 +110,9 @@ export default class HomeTab extends React.Component {
           renderItem={({item}) => 
             <View>
               <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                <Image source={{ uri: item.picture}} style={{ width: 35, height: 35, margin: 10, borderRadius: 50 }}/>
+                <TouchableOpacity onPress={()=>{ToastKotlin.show(item.name,ToastKotlin.SHORT)}}>
+                  <Image source={{ uri: item.picture}} style={{ width: 35, height: 35, margin: 10, borderRadius: 50 }}/>
+                </TouchableOpacity>
                 <View style={{ flex: 4, justifyContent: 'center' }}>
                   <Text style={{ color: 'black', fontSize: 12 }}>{item.name}</Text>
                   <Text numberOfLines={1} style={{ color: 'black', fontSize: 12 }}>{item.address}</Text>

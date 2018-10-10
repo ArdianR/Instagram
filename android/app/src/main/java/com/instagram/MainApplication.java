@@ -3,15 +3,11 @@ package com.instagram;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.oblador.vectoricons.VectorIconsPackage;
-import cl.json.RNSharePackage;
-import io.invertase.firebase.RNFirebasePackage;
+import com.brentvatne.react.ReactVideoPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import org.reactnative.camera.RNCameraPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import cl.json.RNSharePackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -22,6 +18,10 @@ import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 
 import com.instagram.toast.ToastPackage;
+
+import com.instagram.toastkotlin.ToastKotlinPackage;
+
+import com.instagram.streamingkotlin.StreamingKotlinPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,16 +37,19 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-          new VectorIconsPackage(),
-          new RNSharePackage(),
-          new RNFetchBlobPackage(),
-          new RNCameraPackage(),
-          new RNFirebasePackage(),
-          new RNFirebaseStoragePackage(),
-          new RNFirebaseAuthPackage(),
-          new RNFirebaseDatabasePackage(),
-          new ToastPackage()
+            new MainReactPackage(),
+            new ReactVideoPackage(),
+            new VectorIconsPackage(),
+            new RNSharePackage(),
+            new RNFirebasePackage(),
+            new RNFetchBlobPackage(),
+            new RNCameraPackage(),
+            new RNFirebaseStoragePackage(),
+            new RNFirebaseAuthPackage(),
+            new RNFirebaseDatabasePackage(),
+            new ToastPackage(),
+            new ToastKotlinPackage(),
+            new StreamingKotlinPackage()
       );
     }
 

@@ -6,13 +6,14 @@ import Loading from './src/components/screen/Loading'
 import SignUp from './src/components/screen/SignUp'
 import Login from './src/components/screen/Login'
 import Main from './src/components/screen/Main'
+import CameraTab from './src/components/screen/CameraTab'
 
 const App = createSwitchNavigator(
   {
     Loading,
     SignUp,
     Login,
-    Main
+    Main,
   },
   {
     initialRouteName: 'Loading'

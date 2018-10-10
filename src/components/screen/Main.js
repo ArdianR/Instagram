@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator, createSwitchNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 
 import HomeTab from './HomeTab';
@@ -13,9 +13,16 @@ import YouTab from './YouTab';
 import GalleryTab from './GalleryTab';
 import CameraTab from './CameraTab';
 
-import CameraRoll from './CameraRoll';
+import MediaTab from './MediaTab';
 
 import Toast from './Toast';
+
+import VideoStreamingTab from './VideoStreamingTab';
+
+import Camera1 from './Camera1';
+import Camera2 from './Camera2';
+
+let ModalStack = createSwitchNavigator({ Camera1 })
 
 const HomeStack = createStackNavigator({ HomeTab }, {
   navigationOptions: {
@@ -42,7 +49,9 @@ const HomeStack = createStackNavigator({ HomeTab }, {
     },
 
     headerRight: (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={()=>{Toast.show('Playing',Toast.SHORT)}}
+      >
         <Icon name='md-paper-plane' size={25}/>
       </TouchableOpacity>
     ),
@@ -93,16 +102,13 @@ let GalleryStack = createStackNavigator({ GalleryTab })
 
 let CameraStack = createStackNavigator({ CameraTab })
 
-let CameraRollStack = createStackNavigator({ CameraRoll })
-
 let AddStack = createMaterialTopTabNavigator(
   {
     GalleryStack,
     CameraStack,
-    CameraRollStack
   },
   {
-    initialRouteName: 'GalleryStack',
+    initialRouteName: 'CameraStack',
     swipeEnabled: false,
     tabBarOptions: {
       labelStyle: {
@@ -174,6 +180,13 @@ let PeopleStack = createStackNavigator({ ProfileTab }, {
   }
 })
 
+let VideoStreamingStack = createStackNavigator({ VideoStreamingTab }, {
+  navigationOptions: {
+    header: null,
+  }
+})
+
+let MediaStack = createStackNavigator({ MediaTab })
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
@@ -211,13 +224,21 @@ CameraStack.navigationOptions = {
   tabBarLabel: 'Camera',
 }
 
+VideoStreamingStack.navigationOptions = {
+  tabBarLabel: 'Video',
+}
+
+MediaStack.navigationOptions = {
+  tabBarLabel: 'Media',
+}
+
 export default createBottomTabNavigator(
   {
     HomeStack,
     SearchStack,
     AddStack,
     LikeStack,
-    PeopleStack
+    PeopleStack,
   },
   {
     initialRouteName: 'HomeStack',
@@ -244,6 +265,10 @@ export default createBottomTabNavigator(
         if (routeName === 'PeopleStack')
         {
           iconName = `md-person${focused ? '' : ''}`;
+        }
+        if (routeName === 'VideoStreamingStack')
+        {
+          iconName = `md-videocam${focused ? '' : ''}`;
         }
         return <Icon name={iconName} size={25} color={tintColor} />;
       },
