@@ -52,7 +52,6 @@ export default class SearchTab extends Component {
           dataSourceListView: ds.cloneWithRows(responseJson),
           dataSourceFlatList: responseJson,
         }, function() {
-          // In this block you can do something with new state.
           this.arrayholder = responseJson ;
         });
       })
@@ -142,29 +141,5 @@ export default class SearchTab extends Component {
 }
  
 const styles = StyleSheet.create({
- 
- MainContainer :{
 
-  justifyContent: 'center',
-  flex:1,
-  margin: 7,
- 
-  },
- 
- rowViewContainer: {
-   fontSize: 17,
-   padding: 10
-  },
-
-  TextInputStyleClass:{
-        
-   textAlign: 'center',
-   height: 40,
-   borderWidth: 1,
-   borderColor: '#009688',
-   borderRadius: 7 ,
-   backgroundColor : "#FFFFFF"
-        
-   }
- 
-});
+})

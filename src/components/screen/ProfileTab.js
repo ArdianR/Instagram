@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, Platform, Image, Text, View, Button, TouchableOpacity, ScrollView, FlatList, ActivityIndicator, Alert, Dimensions } from 'react-native';
 import firebase from 'react-native-firebase';
-import Icon from 'react-native-vector-icons/dist/Ionicons';
+import Ionicons from 'react-native-vector-icons/dist/Ionicons';
+import { createStackNavigator } from 'react-navigation';
 
-export default class Main extends React.Component {
+class ProfileTab extends React.Component {
 
   constructor()
   {
@@ -120,13 +121,13 @@ export default class Main extends React.Component {
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingBottom: 15, paddingTop: 15, borderBottomColor: '#bbb', borderBottomWidth: StyleSheet.hairlineWidth }}>
               <TouchableOpacity onPress={this.gridView}>
-                <Icon name='md-grid' size={25}/>
+                <Ionicons name='md-grid' size={25}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.listView}>
-                <Icon name='ios-list' size={25}/>
+                <Ionicons name='ios-list' size={25}/>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Icon name='md-clipboard' size={25}/>
+                <Ionicons name='md-clipboard' size={25}/>
               </TouchableOpacity>
           </View>
           <FlatList
@@ -136,7 +137,7 @@ export default class Main extends React.Component {
             renderItem={ ({item}) =>
               <View>
                 <TouchableOpacity onPress={() => { Alert.alert(item.url) }}>
-                  <Image style={{ height: this.state.height, width: this.state.width, margin: 1 }} source = {{ uri: item.url }} />
+                  <Image style={{ height: this.state.height, width: this.state.width, margin: 0 }} source = {{ uri: item.url }} />
                 </TouchableOpacity>
               </View>
             }
@@ -150,5 +151,47 @@ export default class Main extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+let PeopleStack = createStackNavigator({ ProfileTab }, {
+  navigationOptions: {
+    headerLeft: (
+      ''
+    ),
+    headerLeftContainerStyle: {
+      paddingLeft: 15,
+    },
+
+    headerTitle: (
+      ''
+    ),
+    headerTitleContainerStyle: {
+      justifyContent: 'center',
+    },
+    headerTitleStyle: {
+      fontWeight: 'normal',
+      color: 'black'
+    },
+
+    headerRight: (
+      <TouchableOpacity>
+        <Ionicons name='ios-more' size={25} color='black'/>
+      </TouchableOpacity>
+    ),
+    headerRightContainerStyle: {
+      paddingRight: 15,
+    },
+
+    headerStyle: {
+      backgroundColor: 'white'
+    },
+  }
 })
+
+PeopleStack.navigationOptions = {
+  tabBarLabel: 'People',
+}
+
+const styles = StyleSheet.create({
+
+})
+
+export default PeopleStack

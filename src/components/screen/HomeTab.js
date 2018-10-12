@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
 	StyleSheet,
 	Text,
@@ -7,15 +7,12 @@ import {
 	Image,
 	ScrollView,
 	FlatList,
-  ListItem,
-  ActivityIndicator,
   Dimensions
 } from 'react-native';
-import Icon from 'react-native-vector-icons/dist/Ionicons';
-import Toast from './Toast';
-import ToastKotlin from './ToastKotlin';
+import Ionicons from 'react-native-vector-icons/dist/Ionicons';
+import { createStackNavigator } from 'react-navigation';
 
-export default class HomeTab extends React.Component {
+class HomeTab extends React.Component {
 	constructor(props) {
 			super(props);
 			this.state = {
@@ -54,8 +51,6 @@ export default class HomeTab extends React.Component {
 		}
 	}
 
-
-
 	componentWillMount() {
 		return fetch('https://next.json-generator.com/api/json/get/EkfqX7muB')
 			.then((response) => response.json())
@@ -78,7 +73,7 @@ export default class HomeTab extends React.Component {
         <View style={{ flexDirection: 'row', backgroundColor: '#fafafa' }}>
           <Text style={{ paddingLeft: 5,  margin: 5, textAlign: 'left', fontSize: 12, justifyContent: 'center', color: '#202020' }}>invite Facebook Friends to Instagram</Text>
           <View style={{ flex: 1 }}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ModalTab')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('LeftTab')}>
               <Text style={{ paddingRight: 10, margin: 5, textAlign: 'right', fontSize: 12, color: '#3897f0' }}>See All</Text>
             </TouchableOpacity>
           </View>
@@ -119,24 +114,24 @@ export default class HomeTab extends React.Component {
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                   <TouchableOpacity>
-                    <Icon name='ios-more' size={25} color='black' style={{ paddingRight: 15, textAlign: 'right' }}/>
+                    <Ionicons name='ios-more' size={25} color='black' style={{ paddingRight: 15, textAlign: 'right' }}/>
                   </TouchableOpacity>
                 </View>
               </View>
               <Image source={{uri: item.picture}} style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').width }} />
               <View style={{ margin: 15, flexDirection: 'row' }}>
                 <TouchableOpacity>
-                  <Icon name='md-heart-empty' size={25} color='black' style={{ paddingRight: 25 }}/>
+                  <Ionicons name='md-heart-empty' size={25} color='black' style={{ paddingRight: 25 }}/>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Icon name='ios-chatboxes' size={25} color='black' style={{ paddingRight: 25 }}/>
+                  <Ionicons name='ios-chatboxes' size={25} color='black' style={{ paddingRight: 25 }}/>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Icon name='md-send' size={25} color='black' style={{ paddingRight: 25 }}/>
+                  <Ionicons name='md-send' size={25} color='black' style={{ paddingRight: 25 }}/>
                 </TouchableOpacity>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                   <TouchableOpacity>
-                    <Icon name='md-bookmark' size={25} color='black' style={{ paddingRight: 5, textAlign: 'right' }}/>
+                    <Ionicons name='md-bookmark' size={25} color='black' style={{ paddingRight: 5, textAlign: 'right' }}/>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -163,5 +158,46 @@ export default class HomeTab extends React.Component {
 	}
 }
 
+const HomeStack = createStackNavigator({ HomeTab }, {
+  navigationOptions: ({ navigation }) => ({
+    headerLeft: (
+      <TouchableOpacity onPress={() => navigation.navigate('LeftTab')}>
+          <Ionicons name='md-camera' size={25}/>
+      </TouchableOpacity>
+    ),
+    headerLeftContainerStyle: {
+      paddingLeft: 15,
+    },
+    headerTitle: (
+      <Image style={{ resizeMode: 'center', height: 40 }} source={require('../assets/home/logo_instagram.png')}/>
+    ),
+    headerTitleContainerStyle: {
+      justifyContent: 'center',
+    },
+    headerTitleStyle: {
+      fontWeight: 'normal',
+      color: 'black'
+    },
+    headerRight: (
+      <TouchableOpacity onPress={() => navigation.navigate('LeftTab')}>
+        <Ionicons name='md-paper-plane' size={25}/>
+      </TouchableOpacity>
+    ),
+    headerRightContainerStyle: {
+      paddingRight: 15,
+    },
+    headerStyle: {
+      backgroundColor: 'white'
+    },
+  }),
+})
+
+HomeStack.navigationOptions = {
+  tabBarLabel: 'Home',
+}
+
 const styles = StyleSheet.create({
-});
+
+})
+
+export default HomeStack
