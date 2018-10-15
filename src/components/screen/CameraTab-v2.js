@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, CameraRoll, ImageBackground, Switch, ActivityIndicator, Modal, Alert, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, CameraRoll, ImageBackground, Switch, ActivityIndicator } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import MaterialIcons from 'react-native-vector-icons/dist/MaterialIcons';
 import { PermissionsAndroid } from 'react-native';
 
 import {
   createStackNavigator,
-  createDrawerNavigator,
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator
 } from 'react-navigation';
-
-const flashModeOrder = {
-  off: 'on',
-  on: 'auto',
-  auto: 'torch',
-  torch: 'off',
-}
 
 class CameraTab extends Component {
   
@@ -27,19 +21,7 @@ class CameraTab extends Component {
       cameraIcons: 'camera-front',
       flashMode: 'off',
       flashIcons: 'flash-off',
-      modalVisible: false,
-      flash: 'off',
     }
-  }
-
-  toggleFlash() {
-    this.setState({
-      flash: flashModeOrder[this.state.flash],
-    })
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
   }
 
   takePicture = async function(camera) {
@@ -65,10 +47,38 @@ class CameraTab extends Component {
     }
   }
 
+  changeflashMode() {
+    if (this.state.flashMode === 'off') {
+      this.setState({
+        flashMode: 'on',
+        flashIcons: 'flash-on',
+      });
+    } else {
+      this.setState({
+        flashMode: 'off',
+        flashIcons: 'flash-off',
+      });
+    }
+  }
+
   render() {
+    const { image, recording, processing } = this.state;
+    // if (image) {
+    //   return <ImageBackground source={image} style={{ height: 50, width: 50 }}/>;
+    // }
+    // if (this.state.cameraFrontRear) {
+    //   return (
+    //     <View style={{flex: 1, justifyContent: 'center' }}>
+    //       <ActivityIndicator />
+    //     </View>
+    //   );
+    // }
     return (
       <View style={styles.container}>
         <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
           style={styles.preview}
           type={this.state.cameraType}
           mirrorImage={this.state.mirrorMode}
@@ -82,40 +92,32 @@ class CameraTab extends Component {
         >
           {({ camera }) => {
             return (
-              <View style={{ flex: 0, flexDirection: 'row', margin: 20 }}>
+              <View style={{ flex: 0, flexDirection: 'row', margin: 25 }}>
                 <View style={{ flex: 1 }}>
                   <TouchableOpacity style={styles.capture} onPress={this.changeCameraType.bind(this)}>
-                    <MaterialIcons name={this.state.cameraIcons} size={25} color='white' style={styles.button}/>
+                    <MaterialIcons name={this.state.cameraIcons} size={35} color='black' style={styles.button}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.capture} onPress={this.changeflashMode.bind(this)}>
+                    <MaterialIcons name={this.state.flashIcons} size={35} color='black' style={styles.button}/>
                   </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
                   <TouchableOpacity onPress={() => this.takePicture(camera)} style={styles.capture}>
-                    <MaterialIcons name='camera' size={50} color='white' style={styles.button}/>
+                    <MaterialIcons name='camera' size={50} color='black' style={styles.button}/>
                   </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
-                  <TouchableOpacity style={styles.capture} onPress={() => {this.setModalVisible(true)}}>
-                    <MaterialIcons name='settings' size={25} color='white' style={styles.button}/>
+                  <TouchableOpacity style={styles.capture}>
+                    <MaterialIcons name='photo-camera' size={35} color='black' style={styles.button}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.capture}>
+                    <MaterialIcons name='videocam' size={35} color='black' style={styles.button}/>
                   </TouchableOpacity>
                 </View>
               </View>
-            )
+            );
           }}
         </RNCamera>
-        <Modal
-          animationType='slide'
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => { Alert.alert('save') }}>
-          <View style={{ flex: 1, backgroundColor: 'gray' }}>
-            <TouchableOpacity style={styles.capture} onPress={this.toggleFlash.bind(this)}>
-              <Text style={styles.Text}> Flash Mode: {this.state.flash} </Text>
-            </TouchableOpacity>
-            <TouchableHighlight onPress={() => { this.setModalVisible(!this.state.modalVisible) }}>
-              <MaterialIcons name='close' size={50} color='white' style={styles.button}/>
-            </TouchableHighlight>
-          </View>
-        </Modal>
       </View>
     );
   }
@@ -126,6 +128,7 @@ let CameraStack = createStackNavigator({ CameraTab }, {
     header: null,
   }
 })
+
 
 const styles = StyleSheet.create({
   container: {
@@ -141,10 +144,6 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
-  },
-  Text: {
-    fontSize: 20,
-    color: 'white',
   },
 })
 

@@ -10,7 +10,15 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-export default class LikesTab extends React.Component {
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator
+} from 'react-navigation';
+
+import YouTab from './YouTab';
+
+class LikesTab extends React.Component {
   
   static navigationOptions = {
     header: null,
@@ -63,5 +71,27 @@ export default class LikesTab extends React.Component {
 
 }
 
+let LikeStack = createMaterialTopTabNavigator(
+  {
+    LikesTab,
+    YouTab
+  },
+  {
+    initialRouteName: 'LikesTab',
+    swipeEnabled: false,
+    tabBarOptions: {
+      labelStyle: {
+        fontSize: 12,
+        color: 'black',
+      },
+      style: {
+        backgroundColor: 'white',
+      },
+  }
+})
+
 const styles = StyleSheet.create({
-});
+
+})
+
+export default LikeStack

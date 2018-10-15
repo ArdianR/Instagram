@@ -26,58 +26,20 @@ import GalleryTab from './GalleryTab';
 import CameraTab from './CameraTab';
 
 import FollowingTab from './FollowingTab';
-import YouTab from './YouTab';
 
 import ProfileTab from './ProfileTab';
 
-let AddStack = createMaterialTopTabNavigator(
-  {
-    GalleryTab,
-    CameraTab,
-  },
-  {
-    initialRouteName: 'GalleryTab',
-    swipeEnabled: false,
-    tabBarOptions: {
-      labelStyle: {
-        fontSize: 12,
-        color: 'black',
-      },
-      style: {
-        backgroundColor: 'white',
-      },
-  }
-})
-
-let LikeStack = createMaterialTopTabNavigator(
-  {
-    FollowingTab,
-    YouTab
-  },
-  {
-    initialRouteName: 'FollowingTab',
-    swipeEnabled: false,
-    tabBarOptions: {
-      labelStyle: {
-        fontSize: 12,
-        color: 'black',
-      },
-      style: {
-        backgroundColor: 'white',
-      },
-  }
-})
 
 const TabNav = createBottomTabNavigator(
   {
     HomeTab,
     SearchTab,
-    AddStack,
-    LikeStack,
+    GalleryTab,
+    FollowingTab,
     ProfileTab,
   },
   {
-    initialRouteName: 'ProfileTab',
+    initialRouteName: 'HomeTab',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
@@ -90,11 +52,11 @@ const TabNav = createBottomTabNavigator(
         {
           iconName = `md-search${focused ? '' : ''}`;
         }
-        if (routeName === 'AddStack')
+        if (routeName === 'GalleryTab')
         {
           iconName = `md-add-circle${focused ? '' : ''}`;
         }
-        if (routeName === 'LikeStack')
+        if (routeName === 'FollowingTab')
         {
           iconName = `md-heart-empty${focused ? '' : ''}`;
         }
@@ -106,7 +68,7 @@ const TabNav = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: 'red',
+      activeTintColor: 'blue',
       inactiveTintColor: 'gray',
       showLabel: false,
     },
@@ -145,27 +107,41 @@ let RightStack = createStackNavigator({ RightTab }, {
   }
 })
 
-
-const StacksOverTabs = createStackNavigator({
-  Root: {
-    screen: TabNav,
-    navigationOptions: {
-      header: null,
+const StacksOverTabs = createStackNavigator(
+  {
+    Camera: {
+      screen: CameraTab,
+      navigationOptions: {
+        // title: 'Camera',
+        headerTransparent: true,
+        headerTitleStyle: {
+          color: 'black',
+        }
+      },
+    },
+    Root: {
+      screen: TabNav,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Left: {
+      screen: LeftStack,
+      navigationOptions: {
+        title: 'Left',
+      },
+    },
+    Right: {
+      screen: RightStack,
+      navigationOptions: {
+        title: 'Right',
+      },
     },
   },
-  Left: {
-    screen: LeftStack,
-    navigationOptions: {
-      title: 'Left',
-    },
-  },
-  Right: {
-    screen: RightStack,
-    navigationOptions: {
-      title: 'Right',
-    },
-  },
-})
+  {
+    initialRouteName: 'Camera',
+  }
+)
 
 const styles = StyleSheet.create({
   container: {

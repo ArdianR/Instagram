@@ -13,7 +13,13 @@ import {
   Platform
 } from 'react-native';
 
-export default class GalleryTab extends React.Component {
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator
+} from 'react-navigation';
+
+class GalleryTab extends React.Component {
   
   static navigationOptions = {
     header: null,
@@ -77,9 +83,30 @@ export default class GalleryTab extends React.Component {
   }
 }
 
+let AddStack = createMaterialTopTabNavigator(
+  {
+    GalleryTab,
+  },
+  {
+    initialRouteName: 'GalleryTab',
+    swipeEnabled: false,
+    tabBarOptions: {
+      labelStyle: {
+        fontSize: 12,
+        color: 'black',
+      },
+      style: {
+        backgroundColor: 'white',
+      },
+  }
+})
+
 
 styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 })
+
+
+export default AddStack

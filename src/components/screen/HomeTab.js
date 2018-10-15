@@ -161,7 +161,7 @@ class HomeTab extends React.Component {
 const HomeStack = createStackNavigator({ HomeTab }, {
   navigationOptions: ({ navigation }) => ({
     headerLeft: (
-      <TouchableOpacity onPress={() => navigation.navigate('LeftTab')}>
+      <TouchableOpacity onPress={() => navigation.navigate('CameraTab')}>
           <Ionicons name='md-camera' size={25}/>
       </TouchableOpacity>
     ),
@@ -179,7 +179,7 @@ const HomeStack = createStackNavigator({ HomeTab }, {
       color: 'black'
     },
     headerRight: (
-      <TouchableOpacity onPress={() => navigation.navigate('LeftTab')}>
+      <TouchableOpacity onPress={() => navigation.navigate('RightTab')}>
         <Ionicons name='md-paper-plane' size={25}/>
       </TouchableOpacity>
     ),
