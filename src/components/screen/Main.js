@@ -39,7 +39,7 @@ const TabNav = createBottomTabNavigator(
     ProfileTab,
   },
   {
-    initialRouteName: 'HomeTab',
+    initialRouteName: 'GalleryTab',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
@@ -112,7 +112,7 @@ const StacksOverTabs = createStackNavigator(
     Camera: {
       screen: CameraTab,
       navigationOptions: {
-        // title: 'Camera',
+        title: 'Camera',
         headerTransparent: true,
         headerTitleStyle: {
           color: 'black',
@@ -139,7 +139,7 @@ const StacksOverTabs = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Camera',
+    initialRouteName: 'Root',
   }
 )
 

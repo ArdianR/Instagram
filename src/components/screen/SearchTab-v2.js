@@ -163,37 +163,6 @@ export default class SearchTab extends Component {
   }
 }
  
+const styles = StyleSheet.create({
 
-  // componentDidMount(){
-  //   return fetch('https://facebook.github.io/react-native/movies.json')
-  //     .then((response) => response.json())
-  //     .then((responseJson) => {
-
-  //       this.setState({
-  //         isLoading: false,
-  //         dataSource: responseJson.movies,
-  //       }, function(){
-
-  //       });
-
-  //     })
-  //     .catch((error) =>{
-  //       console.error(error);
-  //     });
-  // }
-
-  // async getMoviesFromApi() {
-  //   try {
-  //     let response = await fetch(
-  //       'https://next.json-generator.com/api/json/get/EkfqX7muB'
-  //     );
-  //     let responseJson = await response.json()
-  //     this.setState({
-  //       dataSource: responseJson,
-  //       isLoading: false,
-  //     })
-  //     console.warn(responseJson.movies)
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+})

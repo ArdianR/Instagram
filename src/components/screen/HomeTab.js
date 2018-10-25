@@ -7,24 +7,22 @@ import {
 	Image,
 	ScrollView,
 	FlatList,
-  Dimensions
+  Dimensions,
+  PixelRatio
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import { createStackNavigator } from 'react-navigation';
+import Toast from './Toast';
 
 class HomeTab extends React.Component {
 	constructor(props) {
 			super(props);
 			this.state = {
-        loading: false,
-        data: [],
-        page: 1,
-        seed: 1,
-        error: null,
-        refreshing: false,
         orientation: '',
         width: 0,
-        height: 0
+        height: 0,
+        numberOfLines: 1,
+        readMore: true,
       }
 	}
 
@@ -40,15 +38,14 @@ class HomeTab extends React.Component {
 
   componentDidMount() {
     this.getOrientation();
-    Dimensions.addEventListener( 'change', () => { this.getOrientation(); });
+    Dimensions.addEventListener( 'change', () => { this.getOrientation() })
   }
 
 	ReadMore = () => {
-		if(this.state.read == false)
-		{
-			this.setState({read: true})
-			this.setState({more: false})
-		}
+    this.setState({
+      readMore: false,
+      numberOfLines: 0,
+    })
 	}
 
 	componentWillMount() {
@@ -69,7 +66,7 @@ class HomeTab extends React.Component {
 
 	render() {
 		return (
-      <ScrollView>
+      <ScrollView style={{ flex: 1 }}>
         <View style={{ flexDirection: 'row', backgroundColor: '#fafafa' }}>
           <Text style={{ paddingLeft: 5,  margin: 5, textAlign: 'left', fontSize: 12, justifyContent: 'center', color: '#202020' }}>invite Facebook Friends to Instagram</Text>
           <View style={{ flex: 1 }}>
@@ -85,7 +82,7 @@ class HomeTab extends React.Component {
           keyExtractor={item => item.email}
           style={{ backgroundColor: '#fafafa' }}
           renderItem={({ item }) => (
-            <View style={{ width: 125, height: 175, flexDirection: 'column', justifyContent:'center', margin: 4 }}>
+            <View style={{ width: 125, height: 175, flexDirection: 'column', justifyContent:'center', margin: 3, borderRadius: 5 }}>
               <Image source={{uri: item.picture}} style={{ width: 75, height: 75, justifyContent: 'center', alignSelf: 'center', borderRadius: 50, }} />
               <Text numberOfLines={1} style={{ color: 'black', fontSize: 12, textAlign: 'center', padding: 5, paddingBottom: 15 }}>{item.name}</Text>
               <View style={{ justifyContent: 'center' }}>
@@ -104,8 +101,8 @@ class HomeTab extends React.Component {
           style={{ flex: 1, backgroundColor: '#fafafa' }}
           renderItem={({item}) => 
             <View>
-              <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-                <TouchableOpacity onPress={()=>{ToastKotlin.show(item.name,ToastKotlin.SHORT)}}>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity onPress={()=>{Toast.show(item.name,Toast.SHORT)}}>
                   <Image source={{ uri: item.picture}} style={{ width: 35, height: 35, margin: 10, borderRadius: 50 }}/>
                 </TouchableOpacity>
                 <View style={{ flex: 4, justifyContent: 'center' }}>
@@ -118,7 +115,7 @@ class HomeTab extends React.Component {
                   </TouchableOpacity>
                 </View>
               </View>
-              <Image source={{uri: item.picture}} style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').width }} />
+              <Image source={{uri: item.picture}} style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').width / 1.75, resizeMode: 'stretch' }} />
               <View style={{ margin: 15, flexDirection: 'row' }}>
                 <TouchableOpacity>
                   <Ionicons name='md-heart-empty' size={25} color='black' style={{ paddingRight: 25 }}/>
@@ -137,17 +134,12 @@ class HomeTab extends React.Component {
               </View>
               <Text style={{ fontSize: 12, color: 'black', paddingLeft: 15, paddingBottom: 5 }}>{item.like} Likes</Text>
               <Text style={{ fontSize: 12, color: 'black', paddingLeft: 15, paddingBottom: 5 }}>{item.like} HOURS AGO</Text>
-              <Text numberOfLines={1} style={{ fontSize: 12, color: 'black', paddingLeft: 15, paddingRight: 15, paddingBottom: 5 }}>{item.about}</Text>
+              <Text numberOfLines={this.state.numberOfLines} style={{ fontSize: 12, color: 'black', paddingLeft: 15, paddingRight: 15, paddingBottom: 5 }}>{item.about}</Text>
               {
-                this.state.more ? 
+                this.state.readMore ? 
                   <TouchableOpacity onPress={this.ReadMore}>
                       <Text style={{ fontSize: 12, color: 'black', paddingLeft: 15, paddingBottom: 5 }}>more</Text>
                   </TouchableOpacity>
-                : null
-              }
-              {
-                this.state.read ? 
-                  <Text style= {{ fontSize: 12, color: 'black' }}>{item.about}</Text>
                 : null
               }
             </View>

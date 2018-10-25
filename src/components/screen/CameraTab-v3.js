@@ -4,36 +4,36 @@ import { RNCamera } from 'react-native-camera';
 
 const landmarkSize = 2;
 
-const flashModeOrder = {
-  off: 'on',
-  on: 'auto',
-  auto: 'torch',
-  torch: 'off',
-};
+// const flashModeOrder = {
+//   off: 'on',
+//   on: 'auto',
+//   auto: 'torch',
+//   torch: 'off',
+// };
 
-const wbOrder = {
-  auto: 'sunny',
-  sunny: 'cloudy',
-  cloudy: 'shadow',
-  shadow: 'fluorescent',
-  fluorescent: 'incandescent',
-  incandescent: 'auto',
-};
+// const wbOrder = {
+//   auto: 'sunny',
+//   sunny: 'cloudy',
+//   cloudy: 'shadow',
+//   shadow: 'fluorescent',
+//   fluorescent: 'incandescent',
+//   incandescent: 'auto',
+// };
 
 export default class CameraScreen extends React.Component {
   state = {
     flash: 'off',
-    zoom: 0,
+    // zoom: 0,
     autoFocus: 'on',
     depth: 0,
     type: 'back',
-    whiteBalance: 'auto',
-    ratio: '16:9',
-    ratios: [],
+    // whiteBalance: 'auto',
+    // ratio: '16:9',
+    // ratios: [],
     photoId: 1,
     showGallery: false,
     photos: [],
-    faces: [],
+    // faces: [],
     recordOptions: {
       mute: false,
       maxDuration: 5,
@@ -42,10 +42,10 @@ export default class CameraScreen extends React.Component {
     isRecording: false
   };
 
-  getRatios = async function() {
-    const ratios = await this.camera.getSupportedRatios();
-    return ratios;
-  };
+  // getRatios = async function() {
+  //   const ratios = await this.camera.getSupportedRatios();
+  //   return ratios;
+  // };
 
   toggleView() {
     this.setState({
@@ -71,17 +71,17 @@ export default class CameraScreen extends React.Component {
     });
   }
 
-  toggleWB() {
-    this.setState({
-      whiteBalance: wbOrder[this.state.whiteBalance],
-    });
-  }
+  // toggleWB() {
+  //   this.setState({
+  //     whiteBalance: wbOrder[this.state.whiteBalance],
+  //   });
+  // }
 
-  toggleFocus() {
-    this.setState({
-      autoFocus: this.state.autoFocus === 'on' ? 'off' : 'on',
-    });
-  }
+  // toggleFocus() {
+  //   this.setState({
+  //     autoFocus: this.state.autoFocus === 'on' ? 'off' : 'on',
+  //   });
+  // }
 
   zoomOut() {
     this.setState({
@@ -95,11 +95,11 @@ export default class CameraScreen extends React.Component {
     });
   }
 
-  setFocusDepth(depth) {
-    this.setState({
-      depth,
-    });
-  }
+  // setFocusDepth(depth) {
+  //   this.setState({
+  //     depth,
+  //   });
+  // }
 
   takePicture = async function() {
     if (this.camera) {
@@ -126,8 +126,8 @@ export default class CameraScreen extends React.Component {
     }
   }
 
-  onFacesDetected = ({ faces }) => this.setState({ faces });
-  onFaceDetectionError = state => console.warn('Faces detection error:', state);
+  // onFacesDetected = ({ faces }) => this.setState({ faces });
+  // onFaceDetectionError = state => console.warn('Faces detection error:', state);
 
   renderFace({ bounds, faceID, rollAngle, yawAngle }) {
     return (
@@ -154,35 +154,35 @@ export default class CameraScreen extends React.Component {
     );
   }
 
-  renderLandmarksOfFace(face) {
-    const renderLandmark = position =>
-      position && (
-        <View
-          style={[
-            styles.landmark,
-            {
-              left: position.x - landmarkSize / 2,
-              top: position.y - landmarkSize / 2,
-            },
-          ]}
-        />
-      );
-    return (
-      <View key={`landmarks-${face.faceID}`}>
-        {renderLandmark(face.leftEyePosition)}
-        {renderLandmark(face.rightEyePosition)}
-        {renderLandmark(face.leftEarPosition)}
-        {renderLandmark(face.rightEarPosition)}
-        {renderLandmark(face.leftCheekPosition)}
-        {renderLandmark(face.rightCheekPosition)}
-        {renderLandmark(face.leftMouthPosition)}
-        {renderLandmark(face.mouthPosition)}
-        {renderLandmark(face.rightMouthPosition)}
-        {renderLandmark(face.noseBasePosition)}
-        {renderLandmark(face.bottomMouthPosition)}
-      </View>
-    );
-  }
+  // renderLandmarksOfFace(face) {
+  //   const renderLandmark = position =>
+  //     position && (
+  //       <View
+  //         style={[
+  //           styles.landmark,
+  //           {
+  //             left: position.x - landmarkSize / 2,
+  //             top: position.y - landmarkSize / 2,
+  //           },
+  //         ]}
+  //       />
+  //     );
+  //   return (
+  //     <View key={`landmarks-${face.faceID}`}>
+  //       {renderLandmark(face.leftEyePosition)}
+  //       {renderLandmark(face.rightEyePosition)}
+  //       {renderLandmark(face.leftEarPosition)}
+  //       {renderLandmark(face.rightEarPosition)}
+  //       {renderLandmark(face.leftCheekPosition)}
+  //       {renderLandmark(face.rightCheekPosition)}
+  //       {renderLandmark(face.leftMouthPosition)}
+  //       {renderLandmark(face.mouthPosition)}
+  //       {renderLandmark(face.rightMouthPosition)}
+  //       {renderLandmark(face.noseBasePosition)}
+  //       {renderLandmark(face.bottomMouthPosition)}
+  //     </View>
+  //   );
+  // }
 
   renderFaces() {
     return (
